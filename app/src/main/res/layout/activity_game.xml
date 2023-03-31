@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.melloskitten.hue.GameActivity"
+    tools:context="com.bumbumapps.hue.GameActivity"
     android:background="#0a0a0a">
 
     <GridView

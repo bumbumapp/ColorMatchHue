@@ -1,7 +1,7 @@
 <resources>
 
     <!-- General Assets -->
-    <string name="app_name">Hue</string>
+    <string name="app_name">Hue colors - color matching</string>
     <string name="level_descr">Level</string>
 
 
@@ -10,9 +10,6 @@
         cannot be moved, use them as hints for progress.
         Have fun! \u2764
     </string>
-    <string name="about_desc">Hue is heavily inspired by the iOS application <b>"I love Hue"</b>.
-    Please check it out, it\'s an awesome game. I made this game as a starter project to get into
-    Android programming, please bear with potential bugs.</string>
 
 
     <!-- EASY DIFFICULTY ASSETS -->

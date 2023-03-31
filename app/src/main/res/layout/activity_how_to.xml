@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.melloskitten.hue.MainMenuActivity"
+    tools:context="com.bumbumapps.hue.MainMenuActivity"
     android:background="@drawable/main_menu_gradient">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="43dp"
-        android:text="How To"
+        android:text="How To Play"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
