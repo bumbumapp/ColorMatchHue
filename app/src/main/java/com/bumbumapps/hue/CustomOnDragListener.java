@@ -3,11 +3,12 @@ package com.bumbumapps.hue;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Build;
-import android.support.v7.app.AlertDialog;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -70,7 +71,7 @@ public class CustomOnDragListener implements AdapterView.OnDragListener {
 
 
                     if (tileAdapter.isPuzzleSolved()) {
-                        preferenceCoin=new PreferenceCoin(gameActivity);
+                        preferenceCoin=new PreferenceCoin(gridView.getContext());
                         if (rowlength==4){
                             preferenceCoin.putInteger("coin",preferenceCoin.getInteger("coin")+10);
                         }

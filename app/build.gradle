@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.bumbumapps.huecolorsmatching"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 31
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -29,5 +30,9 @@ dependencies {
     implementation 'com.android.support:support-v4:26.+'
     implementation 'com.android.support:design:+'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.google.android.gms:play-services-ads:11.8.0'
+    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics'
 }

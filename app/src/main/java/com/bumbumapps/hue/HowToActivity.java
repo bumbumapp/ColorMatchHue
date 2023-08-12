@@ -1,9 +1,11 @@
 package com.bumbumapps.hue;
 
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HowToActivity extends AppCompatActivity {
 

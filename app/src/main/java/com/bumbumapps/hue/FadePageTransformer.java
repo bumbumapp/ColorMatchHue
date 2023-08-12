@@ -1,7 +1,9 @@
 package com.bumbumapps.hue;
 
-import android.support.v4.view.ViewPager;
+
 import android.view.View;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by sandra on 13.09.17.

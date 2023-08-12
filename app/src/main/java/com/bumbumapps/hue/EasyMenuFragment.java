@@ -4,14 +4,16 @@ package com.bumbumapps.hue;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.GridView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 // Fragment that holds all the Easy Levels.
 public class EasyMenuFragment extends Fragment {

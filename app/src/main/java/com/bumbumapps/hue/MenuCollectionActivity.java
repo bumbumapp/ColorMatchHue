@@ -1,11 +1,15 @@
 package com.bumbumapps.hue;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 // This activity holds the different difficulty screens so you can switch in between.
 public class MenuCollectionActivity extends FragmentActivity {

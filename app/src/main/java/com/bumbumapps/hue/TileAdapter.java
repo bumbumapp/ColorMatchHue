@@ -1,5 +1,6 @@
 package com.bumbumapps.hue;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -12,21 +13,26 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+
 
 /**
  * Created by sandra on 08.09.17.
  */
 
 // Adapter for the ColorTile array for each level of the game.
-public class TileAdapter extends BaseAdapter implements RewardedVideoAdListener {
+public class TileAdapter extends BaseAdapter {
 
     // MARK: VARS
-    RewardedVideoAd rewardedVideoAd;
+    RewardedAd rewardedVideoAd;
     private Context mContext;
     private ColorTile[] colorTiles;
     PreferenceCoin preferenceCoin;
@@ -100,8 +106,7 @@ public class TileAdapter extends BaseAdapter implements RewardedVideoAdListener 
 
         tileView.setBackgroundColor(Color.rgb(color.red(), color.green(), color.blue()));
 //        MobileAds.initialize(mContext,"ca-app-pub-2158389106066570~1508854721");
-        rewardedVideoAd=MobileAds.getRewardedVideoAdInstance(mContext);
-        rewardedVideoAd.setRewardedVideoAdListener(this);
+
         loadAds();
     }
 
@@ -128,13 +133,23 @@ public class TileAdapter extends BaseAdapter implements RewardedVideoAdListener 
              dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
              Button spend=dialog.findViewById(R.id.spend_btn);
              TextView cancel=dialog.findViewById(R.id.cancel);
-             Button rewardvideo=dialog.findViewById(R.id.reward_btn);
+             final Button rewardvideo=dialog.findViewById(R.id.reward_btn);
              rewardvideo.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
-                     if (rewardedVideoAd.isLoaded())
-                         rewardedVideoAd.show();
-                     dialog.dismiss();
+                     if (rewardedVideoAd != null) {
+                         rewardedVideoAd.show((Activity) mContext, new OnUserEarnedRewardListener() {
+                             @Override
+                             public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                                 colorTiles[posOld].setCurColor(colorTiles[posNew].getRealColor());
+                                 colorTiles[k].setCurColor(changingColor);
+                                 notifyDataSetChanged();
+                                 dialog.dismiss();
+                                 loadAds();
+                             }
+                         });
+                     }
+
                  }
              });
              cancel.setOnClickListener(new View.OnClickListener() {
@@ -176,8 +191,21 @@ public class TileAdapter extends BaseAdapter implements RewardedVideoAdListener 
 
 
     private void loadAds() {
-        rewardedVideoAd.loadAd("ca-app-pub-8444865753152507/3060392547",new AdRequest.Builder().build());
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(mContext, "ca-app-pub-8444865753152507/3060392547",
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        rewardedVideoAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd ad) {
+                        rewardedVideoAd = ad;
+                    }
+                });
     }
+
 
     // Checks if the puzzle is solved yet.
     public boolean isPuzzleSolved() {
@@ -196,42 +224,9 @@ public class TileAdapter extends BaseAdapter implements RewardedVideoAdListener 
         tileView.setHeight(viewGroup.getHeight() / maxHeight);
     }
 
-    @Override
-    public void onRewardedVideoAdLoaded() {
 
-    }
 
-    @Override
-    public void onRewardedVideoAdOpened() {
 
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-          loadAds();
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-        colorTiles[posOld].setCurColor(colorTiles[posNew].getRealColor());
-        colorTiles[k].setCurColor(changingColor);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-
-    }
     
 }
 
