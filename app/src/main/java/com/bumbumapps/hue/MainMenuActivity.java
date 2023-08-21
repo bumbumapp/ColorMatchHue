@@ -23,6 +23,7 @@ public class MainMenuActivity extends AppCompatActivity {
         // Set the layout for the UI elements.
         preferenceCoin=new PreferenceCoin(this);
         TextView coinsValue=findViewById(R.id.coins_value);
+        AdsLoader.loadAds(this);
         if(preferenceCoin.getInteger("coin")!=0)
         coinsValue.setText(String.valueOf(preferenceCoin.getInteger("coin")));
         Button start_game = (Button) findViewById(R.id.main_menu_start_game);

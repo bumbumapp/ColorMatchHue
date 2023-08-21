@@ -1,5 +1,7 @@
 package com.bumbumapps.hue;
 
+import static com.bumbumapps.hue.AdsLoader.rewardedVideoAd;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.OnUserEarnedRewardListener;
@@ -32,7 +35,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 public class TileAdapter extends BaseAdapter {
 
     // MARK: VARS
-    RewardedAd rewardedVideoAd;
+
     private Context mContext;
     private ColorTile[] colorTiles;
     PreferenceCoin preferenceCoin;
@@ -107,7 +110,6 @@ public class TileAdapter extends BaseAdapter {
         tileView.setBackgroundColor(Color.rgb(color.red(), color.green(), color.blue()));
 //        MobileAds.initialize(mContext,"ca-app-pub-2158389106066570~1508854721");
 
-        loadAds();
     }
 
     // Swap method for changing two tile's current colors.
@@ -138,6 +140,12 @@ public class TileAdapter extends BaseAdapter {
                  @Override
                  public void onClick(View view) {
                      if (rewardedVideoAd != null) {
+                         rewardedVideoAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                             @Override
+                             public void onAdDismissedFullScreenContent() {
+                                 AdsLoader.loadAds(mContext);
+                             }
+                         });
                          rewardedVideoAd.show((Activity) mContext, new OnUserEarnedRewardListener() {
                              @Override
                              public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
@@ -145,7 +153,6 @@ public class TileAdapter extends BaseAdapter {
                                  colorTiles[k].setCurColor(changingColor);
                                  notifyDataSetChanged();
                                  dialog.dismiss();
-                                 loadAds();
                              }
                          });
                      }
@@ -190,21 +197,7 @@ public class TileAdapter extends BaseAdapter {
 
 
 
-    private void loadAds() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(mContext, "ca-app-pub-8444865753152507/3060392547",
-                adRequest, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        rewardedVideoAd = null;
-                    }
 
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd ad) {
-                        rewardedVideoAd = ad;
-                    }
-                });
-    }
 
 
     // Checks if the puzzle is solved yet.

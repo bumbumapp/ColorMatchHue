@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bumbumapps.hue">
 <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/color_match_foreground"
