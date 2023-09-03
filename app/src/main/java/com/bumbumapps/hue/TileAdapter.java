@@ -1,6 +1,7 @@
 package com.bumbumapps.hue;
 
 import static com.bumbumapps.hue.AdsLoader.rewardedVideoAd;
+import static com.bumbumapps.hue.Globals.TIMER_FINISHED;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,6 +26,8 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+
+import java.sql.Time;
 
 
 /**
@@ -136,6 +139,9 @@ public class TileAdapter extends BaseAdapter {
              Button spend=dialog.findViewById(R.id.spend_btn);
              TextView cancel=dialog.findViewById(R.id.cancel);
              final Button rewardvideo=dialog.findViewById(R.id.reward_btn);
+             if (TIMER_FINISHED) rewardvideo.setVisibility(View.VISIBLE);
+             else rewardvideo.setVisibility(View.INVISIBLE);
+
              rewardvideo.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
@@ -144,6 +150,8 @@ public class TileAdapter extends BaseAdapter {
                              @Override
                              public void onAdDismissedFullScreenContent() {
                                  AdsLoader.loadAds(mContext);
+                                 Timers.timer().start();
+                                 TIMER_FINISHED = false;
                              }
                          });
                          rewardedVideoAd.show((Activity) mContext, new OnUserEarnedRewardListener() {

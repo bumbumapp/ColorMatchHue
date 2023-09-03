@@ -12,7 +12,7 @@ public class AdsLoader {
 
     public static void loadAds(Context mContext) {
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(mContext, "ca-app-pub-8444865753152507/3060392547",
+        RewardedAd.load(mContext, "",
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
