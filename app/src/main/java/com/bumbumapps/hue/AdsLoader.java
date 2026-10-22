@@ -11,8 +11,9 @@ public class AdsLoader {
     public static RewardedAd rewardedVideoAd ;
 
     public static void loadAds(Context mContext) {
+        if (rewardedVideoAd != null || !AdsConsent.canRequestAds(mContext)) return;
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(mContext, "",
+        RewardedAd.load(mContext.getApplicationContext(), mContext.getString(R.string.admob_rewarded_id),
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {

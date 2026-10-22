@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 // Main  Menu Activity which holds connections to the game menu, about, and how to.
@@ -19,13 +20,21 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+        if (!FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+        }
         // Set the layout for the UI elements.
         preferenceCoin=new PreferenceCoin(this);
         TextView coinsValue=findViewById(R.id.coins_value);
-        AdsLoader.loadAds(this);
-        if(preferenceCoin.getInteger("coin")!=0)
-        coinsValue.setText(String.valueOf(preferenceCoin.getInteger("coin")));
+        TextView privacy = findViewById(R.id.main_menu_privacy);
+        privacy.setOnClickListener(v -> AdsConsent.showPrivacyOptions(this));
+        AdsConsent.gather(this, () -> {
+            privacy.setVisibility(AdsConsent.isPrivacyOptionsRequired(this) ? View.VISIBLE : View.GONE);
+            AdsLoader.loadAds(this);
+            InterstitialHelper.preload(this);
+        });
+        if (preferenceCoin.getInteger("coin") != 0)
+            coinsValue.setText(String.valueOf(preferenceCoin.getInteger("coin")));
         Button start_game = (Button) findViewById(R.id.main_menu_start_game);
         Button how_to = (Button) findViewById(R.id.main_menu_how_to);
 

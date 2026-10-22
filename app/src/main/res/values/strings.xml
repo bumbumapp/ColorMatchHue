@@ -132,4 +132,5 @@
     <string name="expert_lvl_3_col4">#ffb997</string>
     <integer name="expert_lvl_3_max_turns">10</integer>
 
+    <string name="privacy_options">Privacy options</string>
 </resources>
