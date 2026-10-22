@@ -67,7 +67,12 @@ public class TileAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return colorTiles[i];
+        return isValidPosition(i, colorTiles.length) ? colorTiles[i] : null;
+    }
+
+    /** GridView.pointToPosition returns INVALID_POSITION (-1) for touches between tiles. */
+    static boolean isValidPosition(int position, int count) {
+        return position >= 0 && position < count;
     }
 
     @Override
@@ -139,14 +144,16 @@ public class TileAdapter extends BaseAdapter {
              Button spend=dialog.findViewById(R.id.spend_btn);
              TextView cancel=dialog.findViewById(R.id.cancel);
              final Button rewardvideo=dialog.findViewById(R.id.reward_btn);
-             if (TIMER_FINISHED) rewardvideo.setVisibility(View.VISIBLE);
+             if (TIMER_FINISHED && rewardedVideoAd != null) rewardvideo.setVisibility(View.VISIBLE);
              else rewardvideo.setVisibility(View.INVISIBLE);
 
              rewardvideo.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
                      if (rewardedVideoAd != null) {
-                         rewardedVideoAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                         final RewardedAd shownAd = rewardedVideoAd;
+                         AdsLoader.rewardedVideoAd = null;
+                         shownAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                              @Override
                              public void onAdDismissedFullScreenContent() {
                                  AdsLoader.loadAds(mContext);
@@ -154,7 +161,7 @@ public class TileAdapter extends BaseAdapter {
                                  TIMER_FINISHED = false;
                              }
                          });
-                         rewardedVideoAd.show((Activity) mContext, new OnUserEarnedRewardListener() {
+                         shownAd.show((Activity) mContext, new OnUserEarnedRewardListener() {
                              @Override
                              public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                                  colorTiles[posOld].setCurColor(colorTiles[posNew].getRealColor());

@@ -10,9 +10,6 @@ import android.widget.GridView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 
 // MARK: Modified OnDrag Listener for the GridView.
 public class CustomOnDragListener implements AdapterView.OnDragListener {
@@ -57,7 +54,8 @@ public class CustomOnDragListener implements AdapterView.OnDragListener {
                 newPos = gridView.pointToPosition(newX, newY);
                 ColorTile colorTile = (ColorTile) gridView.getAdapter().getItem(newPos);
 
-                if (colorTile.isHint()) {
+                if (colorTile == null || colorTile.isHint()
+                        || !TileAdapter.isValidPosition(oldPos, gridView.getAdapter().getCount())) {
                     return false;
                 }
 
@@ -110,51 +108,13 @@ public class CustomOnDragListener implements AdapterView.OnDragListener {
                 .setMessage("Congratulations, you finished the level!")
                 .setNeutralButton("Done", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            getActivity().finish();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        } catch (NoSuchFieldException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
+                        // Level completed: natural break point for the (frequency capped) interstitial.
+                        InterstitialHelper.showIfReady(gameActivity, gameActivity::finish);
                     }
                 })
+                .setCancelable(false)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-    }
-
-    // Code Snippet taken from https://stackoverflow.com/a/28423385/7217195 for getting the
-    // Activity ... needed for finishing the activity and navigating to the Main Menu.
-    public static Activity getActivity() throws ClassNotFoundException, NoSuchMethodException,
-            NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-
-        Class activityThreadClass = Class.forName("android.app.ActivityThread");
-        Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
-        Field activitiesField = activityThreadClass.getDeclaredField("mActivities");
-        activitiesField.setAccessible(true);
-
-        Map<Object, Object> activities = (Map<Object, Object>) activitiesField.get(activityThread);
-        if (activities == null)
-            return null;
-
-        for (Object activityRecord : activities.values()) {
-            Class activityRecordClass = activityRecord.getClass();
-            Field pausedField = activityRecordClass.getDeclaredField("paused");
-            pausedField.setAccessible(true);
-            if (!pausedField.getBoolean(activityRecord)) {
-                Field activityField = activityRecordClass.getDeclaredField("activity");
-                activityField.setAccessible(true);
-                Activity activity = (Activity) activityField.get(activityRecord);
-                return activity;
-            }
-        }
-        return null;
     }
 
 

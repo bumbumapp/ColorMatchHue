@@ -27,14 +27,12 @@ public class CustomOnTouchListener implements View.OnTouchListener {
                 int y = (int) motionEvent.getY();
                 oldPos = gridView.pointToPosition(x, y);
 
-                View tileView = gridView.getChildAt(oldPos);
-                View.DragShadowBuilder myShadow = new View.DragShadowBuilder(tileView);
-
                 ColorTile colorTile = (ColorTile) gridView.getAdapter().getItem(oldPos);
-
-                if (colorTile.isHint()) {
+                View tileView = gridView.getChildAt(oldPos - gridView.getFirstVisiblePosition());
+                if (colorTile == null || tileView == null || colorTile.isHint()) {
                     return false;
                 }
+                View.DragShadowBuilder myShadow = new View.DragShadowBuilder(tileView);
 
                 tileView.startDrag(null, myShadow, null, 0);
         }
