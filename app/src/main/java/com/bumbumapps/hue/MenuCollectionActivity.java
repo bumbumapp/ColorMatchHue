@@ -14,6 +14,8 @@ import com.google.android.material.tabs.TabLayout;
 // This activity holds the different difficulty screens so you can switch in between.
 public class MenuCollectionActivity extends FragmentActivity {
 
+    public static final String EXTRA_PAGE = "page";
+
     // MARK: VARS
     MenuCollectionPagerAdapter pagerAdapter;
     ViewPager viewPager;
@@ -50,6 +52,7 @@ public class MenuCollectionActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(viewPager, true);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setPageTransformer(false, new FadePageTransformer());
+        viewPager.setCurrentItem(getIntent().getIntExtra(EXTRA_PAGE, 0), false);
 
     }
 }

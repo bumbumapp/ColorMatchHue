@@ -1,92 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Hint dialog: spend 5 coins (or watch a video) to place one tile correctly. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
-    android:background="@drawable/coinsbackground"
-    android:backgroundTint="@android:color/white">
+    android:background="@drawable/bento_dialog_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
     <ImageView
         android:id="@+id/coins"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/coins"
-        />
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/coins" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/hint_title"
+        android:textAppearance="@style/Bento.Text.TitleLarge"
+        android:textColor="?attr/colorOnSurface" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/coins"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/roboto"
-        android:text="If you want to know correct color tile,you must spend 5 coin"
-        android:textAlignment="center"
-        android:textColor="#1A1A5A"
-        android:textSize="20sp" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="15dp"
-    android:layout_marginTop="25dp"
-    android:layout_marginEnd="15dp"
-    android:layout_marginBottom="25dp"
-    android:layout_below="@+id/text"
-    android:weightSum="3">
-    <TextView
-        android:id="@+id/cancel"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:fontFamily="@font/roboto"
-        android:text="Cancel"
-        android:layout_gravity="center_vertical"
-        android:textColor="#1A1A5A"
-        android:textSize="20sp" />
-    <Button
-        android:id="@+id/reward_btn"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#1A1A5A"
-        android:text="Watch Video"
-        android:textAllCaps="false"
-        android:paddingRight="15dp"
-        android:visibility="visible"
-        android:fontFamily="@font/roboto"
-        android:paddingLeft="15dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:background="@drawable/coinsbackground"
-        android:textColor="#ffffff"/>
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="@string/hint_body"
+        android:textAppearance="@style/Bento.Text.Body"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
     <Button
         android:id="@+id/spend_btn"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        style="@style/Bento.Button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#131350"
-        android:text="Spend Coin"
-        android:fontFamily="@font/roboto"
-        android:textAllCaps="false"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:layout_marginStart="15dp"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:background="@drawable/coinsbackground"
-        android:textColor="#ffffff"/>
+        android:layout_marginTop="20dp"
+        android:text="@string/hint_spend" />
+
+    <Button
+        android:id="@+id/reward_btn"
+        style="@style/Bento.Button.Tonal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="?attr/colorSurfaceContainerHigh"
+        android:text="@string/hint_video" />
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:paddingHorizontal="24dp"
+        android:text="@string/hint_cancel"
+        android:textAppearance="@style/Bento.Text.TitleSmall"
+        android:textColor="?attr/colorOnSurfaceVariant" />
 </LinearLayout>
-
-
-
-</RelativeLayout>

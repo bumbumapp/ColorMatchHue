@@ -6,10 +6,7 @@
 
 
     <!-- Main Menu Assets -->
-    <string name="how_to_desc">Place the color tiles to generate a smooth gradient. Some color tiles
-        cannot be moved, use them as hints for progress.
-        Have fun! \u2764
-    </string>
+    <string name="how_to_desc">Drag one tile onto another to swap them. Arrange all the tiles so the colours flow into one smooth gradient.\n\nTiles marked with a dot are fixed in place: use them as hints.\n\nStuck? Hold a tile and drop it back on its own place: for 5 coins it jumps to its correct colour. Finish levels to earn more coins.</string>
 
 
     <!-- EASY DIFFICULTY ASSETS -->
@@ -133,4 +130,27 @@
     <integer name="expert_lvl_3_max_turns">10</integer>
 
     <string name="privacy_options">Privacy options</string>
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="home_title">Hue Colors</string>
+    <string name="coins">Coins</string>
+    <string name="start_game">Start game</string>
+    <string name="hero_sub">Sort the colours into a smooth gradient</string>
+    <string name="section_levels">Levels</string>
+    <string name="how_to_play">How to play</string>
+    <string name="how_to_sub">Swap tiles until the colours flow</string>
+    <string name="choose_level">Choose a level</string>
+    <string name="level_easy">Easy</string>
+    <string name="level_intermediate">Medium</string>
+    <string name="level_expert">Expert</string>
+    <string name="level_easy_sub">6 levels · 4 × 5 tiles</string>
+    <string name="level_intermediate_sub">6 levels · 5 × 5 tiles</string>
+    <string name="level_expert_sub">3 levels · 7 × 7 tiles</string>
+    <string name="level_number">Level %d</string>
+    <string name="hint_title">Need a hint?</string>
+    <string name="hint_body">Place this tile on its correct colour.</string>
+    <string name="hint_spend">Use 5 coins</string>
+    <string name="hint_video">Watch a video</string>
+    <string name="hint_cancel">Not now</string>
 </resources>

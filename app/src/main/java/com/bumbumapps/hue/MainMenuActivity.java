@@ -35,12 +35,40 @@ public class MainMenuActivity extends AppCompatActivity {
         });
         if (preferenceCoin.getInteger("coin") != 0)
             coinsValue.setText(String.valueOf(preferenceCoin.getInteger("coin")));
-        Button start_game = (Button) findViewById(R.id.main_menu_start_game);
-        Button how_to = (Button) findViewById(R.id.main_menu_how_to);
+        int hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
+        ((TextView) findViewById(R.id.greeting)).setText(hour < 12 ? R.string.greeting_morning
+                : hour < 18 ? R.string.greeting_afternoon : R.string.greeting_evening);
 
-        // Add the respective listeners to each button
-        addStartGameListener(start_game);
-        addHowToListener(how_to);
+        // Hero opens the level pager on Easy; the three tiles open it on their difficulty.
+        findViewById(R.id.main_menu_start_game).setOnClickListener(v -> openLevels(0));
+        setUpLevelTile(R.id.tile_easy, R.string.level_easy, R.string.level_easy_sub, R.drawable.swatch_easy, 0);
+        setUpLevelTile(R.id.tile_medium, R.string.level_intermediate, R.string.level_intermediate_sub, R.drawable.swatch_medium, 1);
+        setUpLevelTile(R.id.tile_expert, R.string.level_expert, R.string.level_expert_sub, R.drawable.swatch_expert, 2);
+        addHowToListener(findViewById(R.id.main_menu_how_to));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((TextView) findViewById(R.id.coins_value)).setText(String.valueOf(preferenceCoin.getInteger("coin")));
+    }
+
+    private void setUpLevelTile(int tileId, int name, int sub, int swatch, int page) {
+        View tile = findViewById(tileId);
+        ((TextView) tile.findViewById(R.id.level_name)).setText(name);
+        // Only the level count ("6 levels") fits under the small tile.
+        String count = getString(sub);
+        int dot = count.indexOf('·');
+        ((TextView) tile.findViewById(R.id.level_count)).setText(dot > 0 ? count.substring(0, dot).trim() : count);
+        tile.findViewById(R.id.level_swatch).setBackgroundResource(swatch);
+        tile.setOnClickListener(v -> openLevels(page));
+    }
+
+    private void openLevels(int page) {
+        Intent intent = new Intent(this, MenuCollectionActivity.class);
+        intent.putExtra(MenuCollectionActivity.EXTRA_PAGE, page);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
     }
 
@@ -49,7 +77,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
     // Listener for the howto button.
-    private void addHowToListener(Button how_to) {
+    private void addHowToListener(View how_to) {
         how_to.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -61,26 +89,5 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
-    // Listener for the startgame button.
-    private void addStartGameListener(Button start_game) {
-        start_game.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent myIntent = new Intent(MainMenuActivity.this, MenuCollectionActivity.class);
-                //myIntent.putExtra("key", value); //Optional parameters
-                MainMenuActivity.this.startActivity(myIntent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-    }
-
-    // Sets up custom font for all the buttons and header.
-    private void setUpFont(TextView header, Button start_game, Button how_to, Button about) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "roboto-thin.ttf");
-        header.setTypeface(font);
-        start_game.setTypeface(font);
-        how_to.setTypeface(font);
-        about.setTypeface(font);
-    }
 }

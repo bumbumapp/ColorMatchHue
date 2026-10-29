@@ -1,5 +1,9 @@
 package com.bumbumapps.hue;
 
+import android.graphics.Color;
+import android.view.LayoutInflater;
+import android.widget.TextView;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
@@ -52,23 +56,26 @@ public class LevelAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-
-        // Make the buttons a square.
-        GridView gridView = (GridView) viewGroup;
-        int size = gridView.getRequestedColumnWidth();
-        Button button = new Button(mContext);
-        button.setLayoutParams(new GridView.LayoutParams(size, size));
-
-        // Adjust the view.
-        button.setBackground(mContext.getDrawable(R.drawable.circle));
-        button.setText(String.valueOf(position+1));
-        button.setTextColor(hexColor);
-
-        // Add the onclick listener for every button.
+        // Bento level tile: the level's four corner colours as a swatch, and its number.
+        if (view == null) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_level, viewGroup, false);
+        }
         LevelStrategy levelStrategy = levelStrategies[position];
-        button.setOnClickListener(new OnClickCreateLevelListener(mActivity, GameActivity.class, levelStrategy));
-
-        return button;
+        int[] ids = {R.id.c1, R.id.c2, R.id.c3, R.id.c4};
+        for (int i = 0; i < ids.length; i++) {
+            int color = Color.GRAY;
+            if (levelStrategy.hexCodes != null && i < levelStrategy.hexCodes.length) {
+                try {
+                    color = Color.parseColor(levelStrategy.hexCodes[i]);
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+            view.findViewById(ids[i]).setBackgroundColor(color);
+        }
+        ((TextView) view.findViewById(R.id.level_number))
+                .setText(mContext.getString(R.string.level_number, position + 1));
+        view.setOnClickListener(new OnClickCreateLevelListener(mActivity, GameActivity.class, levelStrategy));
+        return view;
     }
 }
 

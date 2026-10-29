@@ -54,8 +54,6 @@ public class ExpertMenuFragment extends Fragment {
         // Set the font correctly.
         View view = inflater.inflate(R.layout.activity_expert_menu, container, false);
         TextView textView = (TextView) view.findViewById(R.id.expert_menu_header);
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "roboto-thin.ttf");
-        textView.setTypeface(font);
         return view;
     }
 }

@@ -54,8 +54,6 @@ public class IntermediateMenuFragment extends Fragment {
         // Set the font correctly.
         View view = inflater.inflate(R.layout.activity_intermediate_menu, container, false);
         TextView textView = (TextView) view.findViewById(R.id.intermediate_menu_header);
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "roboto-thin.ttf");
-        textView.setTypeface(font);
         return view;
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One level: its four corner colours as a 2x2 swatch, and the level number. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Bento.Tile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <GridLayout
+            android:id="@+id/level_swatch"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:background="@drawable/bento_icon_square"
+            android:clipToOutline="true">
+
+            <View android:id="@+id/c1" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+            <View android:id="@+id/c2" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+            <View android:id="@+id/c3" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+            <View android:id="@+id/c4" android:layout_width="0dp" android:layout_height="0dp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/level_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/Bento.Text.TileLabel" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

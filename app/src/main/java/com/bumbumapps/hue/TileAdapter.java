@@ -145,7 +145,7 @@ public class TileAdapter extends BaseAdapter {
              TextView cancel=dialog.findViewById(R.id.cancel);
              final Button rewardvideo=dialog.findViewById(R.id.reward_btn);
              if (TIMER_FINISHED && rewardedVideoAd != null) rewardvideo.setVisibility(View.VISIBLE);
-             else rewardvideo.setVisibility(View.INVISIBLE);
+             else rewardvideo.setVisibility(View.GONE);
 
              rewardvideo.setOnClickListener(new View.OnClickListener() {
                  @Override

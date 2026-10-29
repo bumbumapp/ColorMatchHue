@@ -56,8 +56,6 @@ public class EasyMenuFragment extends Fragment {
         // Set the font correctly.
         View view = inflater.inflate(R.layout.activity_easy_menu, container, false);
         TextView textView = (TextView) view.findViewById(R.id.easy_menu_header);
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "roboto-thin.ttf");
-        textView.setTypeface(font);
         return view;
     }
 
