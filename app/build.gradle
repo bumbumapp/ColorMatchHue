@@ -9,7 +9,7 @@ def hmsAdId = { String key, String fallback -> ((project.findProperty(key) ?: hm
 def HMS_TEST_INTERSTITIAL_ID = 'testb4znbuh3n2'
 def HMS_INTERSTITIAL_ID = hmsAdId('HMS_INTERSTITIAL_ID', HMS_TEST_INTERSTITIAL_ID)
 def HMS_TEST_REWARDED_ID = 'testx9dtjwj8hp'
-def HMS_REWARDED_ID = hmsAdId('HMS_REWARDED_ID', HMS_TEST_REWARDED_ID)
+def HMS_REWARDED_ID = hmsAdId('HMS_REWARDED_ID', 'p4i9yp40ul')
 // Firebase config is not committed; apply the plugins only when google-services.json is present.
 if (file('google-services.json').exists()) {
     apply plugin: 'com.google.gms.google-services'
