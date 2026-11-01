@@ -1,6 +1,5 @@
 package com.bumbumapps.hue;
 
-import static com.bumbumapps.hue.AdsLoader.rewardedVideoAd;
 import static com.bumbumapps.hue.Globals.TIMER_FINISHED;
 
 import android.app.Activity;
@@ -16,16 +15,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.sql.Time;
 
@@ -144,34 +133,21 @@ public class TileAdapter extends BaseAdapter {
              Button spend=dialog.findViewById(R.id.spend_btn);
              TextView cancel=dialog.findViewById(R.id.cancel);
              final Button rewardvideo=dialog.findViewById(R.id.reward_btn);
-             if (TIMER_FINISHED && rewardedVideoAd != null) rewardvideo.setVisibility(View.VISIBLE);
+             if (TIMER_FINISHED && AdsLoader.isRewardedReady()) rewardvideo.setVisibility(View.VISIBLE);
              else rewardvideo.setVisibility(View.GONE);
 
              rewardvideo.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
-                     if (rewardedVideoAd != null) {
-                         final RewardedAd shownAd = rewardedVideoAd;
-                         AdsLoader.rewardedVideoAd = null;
-                         shownAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                             @Override
-                             public void onAdDismissedFullScreenContent() {
-                                 AdsLoader.loadAds(mContext);
-                                 Timers.timer().start();
-                                 TIMER_FINISHED = false;
-                             }
-                         });
-                         shownAd.show((Activity) mContext, new OnUserEarnedRewardListener() {
-                             @Override
-                             public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                                 colorTiles[posOld].setCurColor(colorTiles[posNew].getRealColor());
-                                 colorTiles[k].setCurColor(changingColor);
-                                 notifyDataSetChanged();
-                                 dialog.dismiss();
-                             }
-                         });
-                     }
-
+                     AdsLoader.showRewarded((Activity) mContext, () -> {
+                         colorTiles[posOld].setCurColor(colorTiles[posNew].getRealColor());
+                         colorTiles[k].setCurColor(changingColor);
+                         notifyDataSetChanged();
+                         dialog.dismiss();
+                     }, () -> {
+                         Timers.timer().start();
+                         TIMER_FINISHED = false;
+                     });
                  }
              });
              cancel.setOnClickListener(new View.OnClickListener() {
